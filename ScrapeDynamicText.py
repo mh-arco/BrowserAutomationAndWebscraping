@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import time
 
 
 def get_driver(url):
@@ -18,10 +19,17 @@ def get_driver(url):
     return driver
 
 
+def clean_text(text):
+    """Clean temperature from text"""
+    output = float(text.split(": ")[1])
+    return output
+
+
 def main():
     driver = get_driver("https://automated.pythonanywhere.com")
-    element = driver.find_element(by=By.XPATH, value="/html/body/div[1]/div/h1[1]")
-    return element.text
+    time.sleep(2)
+    element = driver.find_element(by=By.XPATH, value="/html/body/div[1]/div/h1[2]")
+    return clean_text(element.text)
 
 
 print(main())
